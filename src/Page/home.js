@@ -1,98 +1,76 @@
 import React from "react";
-import { Container, Row, Col, Form, Button, InputGroup, Carousel } from "react-bootstrap";
-import { FaShoppingCart } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Home() {
+const Home = () => {
   return (
-    <Container fluid>
-      {/* Header */}
-      <Row className="align-items-center p-3 border-bottom">
-        <Col xs={8}>
-          <InputGroup>
-            <Form.Control placeholder="ค้นหา..." />
-            <Button variant="primary">ค้นหา</Button>
-          </InputGroup>
-        </Col>
-        <Col xs={4} className="text-end">
-          <FaShoppingCart size={24} />
-        </Col>
-      </Row>
+    <div className="d-flex justify-content-center mt-3" style={{ backgroundColor: "#ffffff", padding: "20px", borderRadius: "15px" }}>
+      <div className="container">
+        {/* วิดีโอ */}
+        <div className="p-3 shadow-lg">
+          <video width="100%" height="auto" controls autoPlay>
+            <source src="your-video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
 
-      {/* Carousel สไลด์รูปภาพ */}
-      <Row className="mt-3">
-        <Col>
-          <Carousel>
-            <Carousel.Item>
-              <img
-                className="d-block w-100 carousel-image"
-                src="https://affiliatedir.com/images/products/15/15test.jpg"
-                alt="Slide 1"
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100 carousel-image"
-                src="https://affiliatedir.com/images/products/15/15test.jpg"
-                alt="Slide 2"
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100 carousel-image"
-                src="https://affiliatedir.com/images/products/15/15test.jpg"
-                alt="Slide 3"
-              />
-            </Carousel.Item>
-          </Carousel>
-        </Col>
-      </Row>
+        {/* โซนสินค้า */}
+        <div className="card p-4 shadow-lg mt-4">
+          <div className="row text-center">
+            <div className="col-md-4">
+              <div className="card shadow p-3">
+                <img src="flower1.jpg" className="card-img-top" alt="Flower 1" />
+                <div className="card-body">
+                  <h5 className="card-title">Name Flower</h5>
+                  <p className="card-text">100 Baht</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="card shadow p-3">
+                <img src="flower2.jpg" className="card-img-top" alt="Flower 2" />
+                <div className="card-body">
+                  <h5 className="card-title">Name Flower</h5>
+                  <p className="card-text">100 Baht</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="card shadow p-3">
+                <img src="flower3.jpg" className="card-img-top" alt="Flower 3" />
+                <div className="card-body">
+                  <h5 className="card-title">Name Flower</h5>
+                  <p className="card-text">100 Baht</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      {/* Grid สินค้า */}
-      <Row className="mt-3">
-        <Col md={3}>
-          <div className="border rounded p-3 text-center">
-            <img
-              src="https://affiliatedir.com/images/products/15/15test.jpg" // รูปสินค้า 1
-              className="w-100 mb-2"
-              alt="Product 1"
-            />
-            <p>รายละเอียดสินค้า 1</p>
+        {/* โซนสมาชิก */}
+        <div className="card p-4 shadow-lg mt-4">
+          <h4 className="text-center">สมาชิก</h4>
+          <div className="row text-center">
+            <div className="col-md-3">
+              <img src="member1.jpg" className="img-fluid" alt="Member 1" />
+              <p>บิว 04</p>
+            </div>
+            <div className="col-md-3">
+              <img src="member2.jpg" className="img-fluid" alt="Member 2" />
+              <p>บัว 05</p>
+            </div>
+            <div className="col-md-3">
+              <img src="member3.jpg" className="img-fluid" alt="Member 3" />
+              <p>ตัว 16</p>
+            </div>
+            <div className="col-md-3">
+              <img src="member4.jpg" className="img-fluid" alt="Member 4" />
+              <p>บัว 26</p>
+            </div>
           </div>
-        </Col>
-        <Col md={3}>
-          <div className="border rounded p-3 text-center">
-            <img
-              src="https://affiliatedir.com/images/products/15/15test.jpg" // รูปสินค้า 2
-              className="w-100 mb-2"
-              alt="Product 2"
-            />
-            <p>รายละเอียดสินค้า 2</p>
-          </div>
-        </Col>
-        <Col md={3}>
-          <div className="border rounded p-3 text-center">
-            <img
-              src="https://affiliatedir.com/images/products/15/15test.jpg" // รูปสินค้า 3
-              className="w-100 mb-2"
-              alt="Product 3"
-            />
-            <p>รายละเอียดสินค้า 3</p>
-          </div>
-        </Col>
-        <Col md={3}>
-          <div className="border rounded p-3 text-center">
-            <img
-              src="https://affiliatedir.com/images/products/15/15test.jpg" // รูปสินค้า 4
-              className="w-100 mb-2"
-              alt="Product 4"
-            />
-            <p>รายละเอียดสินค้า 4</p>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
 export default Home;

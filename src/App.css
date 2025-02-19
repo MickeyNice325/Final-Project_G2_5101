@@ -40,3 +40,8 @@
   height: 400px; /* Adjust the height as per your requirement */
   object-fit: cover;
 }
+.card-hover:hover {
+  transform: scale(1.05); /* ขยายขนาดขึ้นเล็กน้อย */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+  cursor: pointer; /* เปลี่ยนเป็นไอคอนมือ */
+}
