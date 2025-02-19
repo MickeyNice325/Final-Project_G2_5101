@@ -5,16 +5,11 @@ const Home = () => {
   return (
     <div className="d-flex justify-content-center mt-3" style={{ backgroundColor: "#ffffff", padding: "20px", borderRadius: "15px" }}>
       <div className="container">
-        {/* วิดีโอ */}
-       
-          <video width="100%" height="auto" controls autoPlay>
-            <source src="your-video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+
 
 
         {/* โซนสินค้า */}
-        <div className="p-4 shadow-lg mt-4">
+        
           <div className="row text-center">
             <div className="col-md-4">
               <img src="flower1.jpg" className="img-fluid" alt="Flower 1" />
@@ -32,7 +27,7 @@ const Home = () => {
               <p>100 Baht</p>
             </div>
           </div>
-        </div>
+
 
         {/* โซนสมาชิก */}
        
