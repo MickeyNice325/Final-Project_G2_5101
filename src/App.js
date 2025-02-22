@@ -4,9 +4,10 @@ import "./App.css";
 import Sizebar from "./other/sizebar.js";
 import Home from "./Page/home.js";
 import Register from "./Page/register.js";
-// import Products from "./Page/products.js";
-// import Cart from "./Page/cart.js";
+import Flowers from "./Page/flowers.js";
+import Cart from "./Page/cart.js";
 import Login from "./Page/login.js";
+import Order from "./Page/order.js";
 
 function App() {
   return (
@@ -21,9 +22,10 @@ function App() {
         <div className="flex-grow-1" style={{ marginLeft: "200px" }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/products" element={<Products />} />
-            <Route path="/cart" element={<Cart />} /> */}
+            <Route path="/flowers" element={<Flowers />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} /> 
+            <Route path="/order" element={<Order />} /> 
             <Route path="/Register" element={<Register />} />
           </Routes>
         </div>

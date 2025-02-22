@@ -81,31 +81,57 @@ const Home = () => {
             </Link>
           </div>
         </div>
+        <div className="row align-items-center shadow-lg p-4 rounded bg-white">
 
-        {/* Member Section */}
-        <h4 className="text-center mt-5">สมาชิก</h4>
-        <div className="row text-center">
-          {[
-            { name: "นัน 04", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010011.jpg" },
-            { name: "นัท 05", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010012.jpg" },
-            { name: "ดัง 16", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010024.jpg" },
-            { name: "มิกซ์ 26", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" },
-            { name: "ริว 35", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" }
-          ].map((member, index) => (
-            <div className="col-md-4 mb-4" key={index}>
-              <div className="d-flex flex-column align-items-center">
-                <img 
-                  src={member.img} 
-                  className="img-fluid rounded" 
-                  alt={member.name} 
-                  style={{ width: "150px", height: "150px", objectFit: "contain", backgroundColor: "#f8f9fa" }} 
-                />
-                <p className="mt-2 fw-bold" style={{ color: "#8666c6" }}>{member.name}</p>
-                <p className="text-muted">ชื่อ - นามสกุล</p>
-              </div>
-            </div>
-          ))}
+        {/* รูปภาพ */}
+        <div className="col-md-4 text-center">
+          <div className="image-container">
+            <img
+              src="https://i.ytimg.com/vi/uZWZJy8BV_g/maxresdefault.jpg"
+              alt="Rose Blue"
+              className="img-fluid rounded shadow"
+              style={{ height: "200px", width: "100%", objectFit: "contain", backgroundColor: "#f8f9fa" }}
+            />
+          </div>
         </div>
+        {/* รายละเอียดสินค้า */}
+        <div className="col-md-8">
+          <h3 className="text-primary fw-bold">Sunflower</h3>
+          <p className="text-muted">
+            <strong>ความหมาย:</strong> Sunflower's design is based on the common sunflower (Helianthus annuus), a crop native to the Americas harvested for their edible oils and seeds. Her ability to produce sun is a pun on the plant she's based on.
+Her reload animation in her shooter game appearances where she lifts her face towards the sun is a reference to the urban myth which states that sunflower heads
+          </p>
+          <Link className="btn btn-primary rounded-pill px-4">
+            กดเพื่อสั่งซื้อ
+          </Link>
+        </div>
+      </div>
+
+{/* Member Section */}
+<h4 className="text-center mt-5">สมาชิก</h4>
+<div className="row text-center">
+  {[
+    { nickname: "นัน", fname: "นันทิพัทธ์", lname: "สุกันทา", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010011.jpg" },
+    { nickname: "นัท", fname: "ณัฐภัทร", lname: "กลิ่นจันทร์", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010012.jpg" },
+    { nickname: "ดัง", fname: "naruepon", lname: "wangwiang", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010024.jpg" },
+    { nickname: "มิกซ์", fname: "นัทพงษ์", lname: "วงศ์แสง", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" },
+    { nickname: "ริว", fname: "วัชรพงศ์", lname: "ส่งเสริม", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" }
+  ].map((member, index) => (
+    <div className="col-md-4 mb-4" key={index}>
+      <div className="d-flex flex-column align-items-center">
+        <img 
+          src={member.img} 
+          className="img-fluid rounded" 
+          alt={`${member.fname} ${member.lname}`} 
+          style={{ width: "150px", height: "150px", objectFit: "contain", backgroundColor: "#f8f9fa" }} 
+        />
+        <p className="mt-2 fw-bold" style={{ color: "#8666c6" }}>ชื่อเล่น: {member.nickname}</p>
+        <p className="text-muted">{member.fname} {member.lname}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
       </div>
     </div>
   );

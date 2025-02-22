@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ListGroup } from "react-bootstrap";
-import { FaHome, FaShoppingCart, FaSignInAlt, FaSeedling } from "react-icons/fa";
+import { FaHome, FaShoppingCart, FaSignInAlt, FaSeedling,FaBoxOpen } from "react-icons/fa";
 import { Link } from "react-router-dom"; // ✅ นำเข้า Link
 
 const Sidebar = () => {
@@ -33,9 +33,13 @@ const Sidebar = () => {
         <ListGroup.Item as={Link} to="/cart" action className="d-flex align-items-center">
           <FaShoppingCart className="me-2 text-secondary" /> <strong>Cart</strong>
         </ListGroup.Item>
+        <ListGroup.Item as={Link} to="/order" action className="d-flex align-items-center">
+          <FaBoxOpen className="me-2 text-secondary" /> <strong>Stats Order</strong>
+        </ListGroup.Item>
         <ListGroup.Item as={Link} to="/login" action className="d-flex align-items-center">
           <FaSignInAlt className="me-2 text-secondary" /> <strong>Login</strong>
         </ListGroup.Item>
+
       </ListGroup>
     </div>
   );
