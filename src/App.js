@@ -8,7 +8,7 @@ import Flowers from "./Page/flowers.js";
 import Cart from "./Page/cart.js";
 import Login from "./Page/login.js";
 import Order from "./Page/order.js";
-
+import Pay from "./Page/pay.js";
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +27,7 @@ function App() {
             <Route path="/login" element={<Login />} /> 
             <Route path="/order" element={<Order />} /> 
             <Route path="/Register" element={<Register />} />
+            <Route path="/pay" element={<Pay />} />
           </Routes>
         </div>
       </div>
