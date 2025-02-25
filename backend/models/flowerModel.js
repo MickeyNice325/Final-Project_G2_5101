@@ -5,11 +5,19 @@ const getAllFlowers = (callback) => {
 };
 
 const addFlower = (name, price, imageUrl, callback) => {
-  db.query("INSERT INTO flowers (name, price, imageUrl) VALUES (?, ?, ?)", [name, price, imageUrl], callback);
+  db.query(
+    "INSERT INTO flowers (name, price, imageUrl) VALUES (?, ?, ?)",
+    [name, price, imageUrl],
+    callback
+  );
 };
 
 const updateFlower = (id, name, price, imageUrl, callback) => {
-  db.query("UPDATE flowers SET name = ?, price = ?, imageUrl = ? WHERE id = ?", [name, price, imageUrl, id], callback);
+  db.query(
+    "UPDATE flowers SET name = ?, price = ?, imageUrl = ? WHERE id = ?",
+    [name, price, imageUrl, id],
+    callback
+  );
 };
 
 const deleteFlower = (id, callback) => {
