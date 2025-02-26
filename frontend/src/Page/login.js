@@ -28,19 +28,39 @@ const Login = ({ setToken }) => {
       <Form onSubmit={handleLogin}>
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          <Form.Control
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </Form.Group>
 
         <Button variant="primary" type="submit">
           Login
         </Button>
       </Form>
+
       {message && <p>{message}</p>}
+
+      {/* ข้อความแนะนำสำหรับสมัครสมาชิก */}
+      <div className="mt-3">
+        <p>
+          ยังไม่มีบัญชี? <a href="/register">สมัครสมาชิกได้ที่นี่</a>
+        </p>
+      </div>
     </div>
   );
 };
