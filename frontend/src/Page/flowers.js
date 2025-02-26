@@ -5,14 +5,20 @@ import API from "../api"; // ✅ ใช้ API Utility
 
 const Flowers = ({ token }) => {
   const [flowers, setFlowers] = useState([]);
+  const [loading, setLoading] = useState(true);  // เพิ่มสถานะสำหรับการโหลด
+  const [error, setError] = useState(null);  // เพิ่มสถานะสำหรับการจัดการข้อผิดพลาด
 
   useEffect(() => {
     const fetchFlowers = async () => {
       try {
         const res = await API.get("/flowers"); // ดึงข้อมูลสินค้า
+        console.log(res.data);  // ตรวจสอบข้อมูลที่ได้รับจาก API
         setFlowers(res.data);
+        setLoading(false);  // การโหลดเสร็จสมบูรณ์
       } catch (err) {
         console.error("Error fetching flowers:", err);
+        setError("Failed to load products.");
+        setLoading(false);  // เมื่อเกิดข้อผิดพลาด
       }
     };
     fetchFlowers();
@@ -24,10 +30,11 @@ const Flowers = ({ token }) => {
       return;
     }
     try {
+      // ใช้ API สำหรับเพิ่มสินค้าลงในตะกร้า
       await API.post(
-        "/cart",
-        { flowerId, quantity: 1 },
-        { headers: { Authorization: `Bearer ${token}` } }
+        "/cart",  // ใช้ API สำหรับเพิ่มสินค้าลงในตะกร้า
+        { flowerId, quantity: 1 },  // ส่งข้อมูลไปที่ backend
+        { headers: { Authorization: `Bearer ${token}` } }  // ส่ง Token ใน header
       );
       alert("Added to cart!");
     } catch (err) {
@@ -43,24 +50,30 @@ const Flowers = ({ token }) => {
         
         {/* Product Section */}
         <div className="row text-center mt-5 mb-5">
-          {flowers.length === 0 ? <p>Loading products...</p> : null}
-          {flowers.map((flower) => (
-            <div className="col-md-4 mb-4" key={flower.id}>
-              <div className="image-container">
-                <img
-                  src={flower.imageUrl}
-                  className="img-fluid"
-                  alt={flower.name}
-                  style={{ height: "200px", width: "100%", objectFit: "contain", backgroundColor: "#f8f9fa" }}
-                />
+          {loading && <p>Loading products...</p>} {/* แสดงข้อความขณะโหลดข้อมูล */}
+          {error && <p className="text-danger">{error}</p>} {/* แสดงข้อความหากเกิดข้อผิดพลาด */}
+
+          {flowers.length === 0 && !loading && !error ? (
+            <p>No products found.</p>  // แสดงข้อความถ้าไม่มีสินค้าที่โหลด
+          ) : (
+            flowers.map((flower) => (
+              <div className="col-md-4 mb-4" key={flower.id}>
+                <div className="image-container">
+                  <img
+                    src={flower.imageUrl}
+                    className="img-fluid"
+                    alt={flower.name}
+                    style={{ height: "200px", width: "100%", objectFit: "contain", backgroundColor: "#f8f9fa" }}
+                  />
+                </div>
+                <h5 className="mt-2">{flower.name}</h5>
+                <p>{flower.price} Baht</p>
+                <button className="btn btn-primary" onClick={() => addToCart(flower.id)}>
+                  Add to Cart
+                </button>
               </div>
-              <h5 className="mt-2">{flower.name}</h5>
-              <p>{flower.price} Baht</p>
-              <button className="btn btn-primary" onClick={() => addToCart(flower.id)}>
-                Add to Cart
-              </button>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ const Login = ({ setToken }) => {
       setMessage("Login successful");
       localStorage.setItem("token", res.data.token); // เก็บ token ลงใน localStorage
       setToken(res.data.token); // ส่ง token ไปยัง App
-      navigate("/home"); // เปลี่ยนจาก history.push เป็น navigate
+      navigate("/"); // เปลี่ยนจาก history.push เป็น navigate
     } catch (err) {
       setMessage(err.response.data.message);
     }

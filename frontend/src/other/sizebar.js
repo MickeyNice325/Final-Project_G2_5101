@@ -18,9 +18,11 @@ const Sidebar = ({ token }) => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem("token"); 
+    navigate("/");
+    window.location.reload();
   };
+  
 
   return (
     <div className="shadow bg-white rounded p-3" style={{ width: "100%", minHeight: "95vh" }}>

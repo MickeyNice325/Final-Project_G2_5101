@@ -7,41 +7,23 @@ const API = axios.create({
   },
 });
 
-// ฟังก์ชันดึงข้อมูลสินค้าทั้งหมด
 API.getFlowers = () => API.get("/flowers");
 
-// ฟังก์ชันสำหรับลงทะเบียนผู้ใช้ใหม่
 API.register = (username, password) => 
   API.post("/auth/register", { username, password });
 
-// ฟังก์ชันสำหรับล็อกอิน
 API.login = (username, password) =>
   API.post("/auth/login", { username, password });
 
-// ฟังก์ชันสำหรับการเพิ่มสินค้าในตะกร้า
-API.addToCart = (userId, flowerId, quantity) =>
-  API.post("/cart", { userId, flowerId, quantity });
-
-// ฟังก์ชันสำหรับเพิ่มสินค้าใหม่ (รองรับการอัปโหลดไฟล์รูปภาพ)
-API.addFlower = (flowerData) => {
-  const formData = new FormData();
-  formData.append("name", flowerData.name);
-  formData.append("price", flowerData.price);
-  formData.append("image", flowerData.image);
-
+// เพิ่ม API สำหรับเพิ่มสินค้า
+API.addFlower = (formData) => {
   return API.post("/flowers", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: {
+      "Content-Type": "multipart/form-data",  // ใช้ multipart/form-data เมื่อส่งไฟล์
+    },
   });
 };
 
-API.addFlower = (flowerData) => {
-  return API.post("/flowers", flowerData);  
-};
-
-
-
-
-// ฟังก์ชันสำหรับการลบสินค้า
-API.deleteFlower = (flowerId) => API.delete(`/flowers/${flowerId}`);
+API.addToCart = (flowerData) => API.post("/cart", flowerData); // เพิ่ม API สำหรับตะกร้า
 
 export default API;

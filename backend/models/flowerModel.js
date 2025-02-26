@@ -1,20 +1,24 @@
 const db = require("../db");
 
-// ดึงข้อมูลทั้งหมดจากตาราง flowers
+// ฟังก์ชันดึงข้อมูลสินค้าทั้งหมด
 const getAllFlowers = (callback) => {
-  db.query("SELECT * FROM flowers", callback);
-};
-
-// เพิ่มสินค้าใหม่ พร้อมกับ URL รูปภาพ
-const addFlower = (name, price, imageUrl, callback) => {
+  // ใช้ CONCAT เพื่อรวม URL ของรูปภาพ
   db.query(
-    "INSERT INTO flowers (name, price, imageUrl) VALUES (?, ?, ?)",
-    [name, price, imageUrl], // ส่งข้อมูลสินค้าพร้อม URL รูปภาพ
+    "SELECT id, name, price, CONCAT('http://localhost:5000/uploads/', imageUrl) AS imageUrl FROM flowers",
     callback
   );
 };
 
-// อัปเดตข้อมูลสินค้า
+// ฟังก์ชันเพิ่มสินค้า
+const addFlower = (name, price, imageUrl, callback) => {
+  db.query(
+    "INSERT INTO flowers (name, price, imageUrl) VALUES (?, ?, ?)",
+    [name, price, imageUrl],  // ส่งข้อมูลสินค้าไปพร้อม URL รูปภาพ
+    callback
+  );
+};
+
+// ฟังก์ชันอัปเดตสินค้า
 const updateFlower = (id, name, price, imageUrl, callback) => {
   db.query(
     "UPDATE flowers SET name = ?, price = ?, imageUrl = ? WHERE id = ?",
@@ -23,7 +27,7 @@ const updateFlower = (id, name, price, imageUrl, callback) => {
   );
 };
 
-// ลบสินค้า
+// ฟังก์ชันลบสินค้า
 const deleteFlower = (id, callback) => {
   db.query("DELETE FROM flowers WHERE id = ?", [id], callback);
 };

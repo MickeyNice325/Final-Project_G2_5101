@@ -2,18 +2,24 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import API from "../api"; // ✅ ใช้ API Utility
+import API from "../api"; // ใช้ API Utility
 
 const Home = ({ token }) => {
   const [flowers, setFlowers] = useState([]);
+  const [loading, setLoading] = useState(true); // เพิ่ม state สำหรับการแสดงสถานะการโหลด
+  const [error, setError] = useState(null); // เพิ่ม state สำหรับการจัดการข้อผิดพลาด
 
   useEffect(() => {
     const fetchFlowers = async () => {
       try {
-        const res = await API.get("/flowers"); // ✅ ดึงสินค้าจาก Backend
+        const res = await API.get("/flowers"); // ดึงสินค้าจาก Backend
+        console.log(res); // ตรวจสอบข้อมูลที่ได้รับจาก API
         setFlowers(res.data);
+        setLoading(false); // โหลดเสร็จ
       } catch (err) {
         console.error("Error fetching flowers:", err);
+        setLoading(false); // เมื่อเกิดข้อผิดพลาด
+        setError("Failed to load products.");
       }
     };
     fetchFlowers();
@@ -59,24 +65,30 @@ const Home = ({ token }) => {
 
         {/* Product Section */}
         <div className="row text-center mt-5 mb-5">
-          {flowers.length === 0 ? <p>Loading products...</p> : null}
-          {flowers.map((flower) => (
-            <div className="col-md-4 mb-4" key={flower.id}>
-              <div className="image-container">
-                <img
-                  src={flower.imageUrl}
-                  className="img-fluid"
-                  alt={flower.name}
-                  style={{ height: "200px", width: "100%", objectFit: "contain", backgroundColor: "#f8f9fa" }}
-                />
+          {loading && <p>Loading products...</p>} {/* Show loading text when data is being fetched */}
+          {error && <p className="text-danger">{error}</p>} {/* Show error message if there's an error */}
+
+          {flowers.length === 0 && !loading && !error ? (
+            <p>No products found.</p> // If no flowers are found
+          ) : (
+            flowers.map((flower) => (
+              <div className="col-md-4 mb-4" key={flower.id}>
+                <div className="image-container">
+                  <img
+                    src={flower.imageUrl} // ใช้ imageUrl ที่ backend ส่งกลับมา
+                    className="img-fluid"
+                    alt={flower.name}
+                    style={{ height: "200px", width: "100%", objectFit: "contain", backgroundColor: "#f8f9fa" }}
+                  />
+                </div>
+                <h5 className="mt-2">{flower.name}</h5>
+                <p>{flower.price} Baht</p>
+                <button className="btn btn-primary" onClick={() => addToCart(flower.id)}>
+                  Add to Cart
+                </button>
               </div>
-              <h5 className="mt-2">{flower.name}</h5>
-              <p>{flower.price} Baht</p>
-              <button className="btn btn-primary" onClick={() => addToCart(flower.id)}>
-                Add to Cart
-              </button>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
         {/* Member Section */}
@@ -87,7 +99,7 @@ const Home = ({ token }) => {
             { nickname: "นัท", fname: "ณัฐภัทร", lname: "กลิ่นจันทร์", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010012.jpg" },
             { nickname: "ดัง", fname: "naruepon", lname: "wangwiang", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010024.jpg" },
             { nickname: "มิกซ์", fname: "นัทพงษ์", lname: "วงศ์แสง", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" },
-            { nickname: "ริว", fname: "วัชรพงษ์", lname: "ส่งเสริม", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" }
+            { nickname: "ริว", fname: "วัชรพงษ์", lname: "ส่งเสริม", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010070.jpg" }
           ].map((member, index) => (
             <div className="col-md-4 mb-4" key={index}>
               <div className="d-flex flex-column align-items-center">
@@ -103,7 +115,6 @@ const Home = ({ token }) => {
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );
