@@ -1,37 +1,50 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
-import Sizebar from "./other/sizebar.js";
-import Home from "./Page/home.js";
-import Register from "./Page/register.js";
-import Flowers from "./Page/flowers.js";
-import Cart from "./Page/cart.js";
-import Login from "./Page/login.js";
-import Order from "./Page/order.js";
-import Pay from "./Page/pay.js";
-function App() {
-  return (
-    <BrowserRouter>
-      <div className="d-flex">
-        {/* Sidebar (ซ้าย) */}
-        <div className="position-fixed vh-100" style={{ width: "200px" }}>
-          <Sizebar />
-        </div>
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Register from "./Page/register";
+import Login from "./Page/login";
+import Home from "./Page/home";
+import Cart from "./Page/cart";
+import Pay from "./Page/pay";
+import Order from "./Page/order";
+import Sidebar from "./other/sizebar";
+import Flowers from "./Page/flowers"; // นำเข้า Flowers.js
 
-        {/* ส่วนเนื้อหา (ขวา) */}
-        <div className="flex-grow-1" style={{ marginLeft: "200px" }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/flowers" element={<Flowers />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/login" element={<Login />} /> 
-            <Route path="/order" element={<Order />} /> 
-            <Route path="/Register" element={<Register />} />
-            <Route path="/pay" element={<Pay />} />
-          </Routes>
+function App() {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  const PrivateRoute = ({ element }) => {
+    return token ? element : <Navigate to="/login" />;
+  };
+
+  return (
+    <Router>
+      <div className="App">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-2 p-3">
+              <Sidebar token={token} /> {/* ส่ง token ไปที่ Sidebar */}
+            </div>
+
+            <div className="col-md-10 p-3">
+              <div className="card"> {/* เปลี่ยนจาก class เป็น className */}
+                <div className="card-body"> {/* เปลี่ยนจาก class เป็น className */}
+                  <Routes>
+                    <Route path="/" element={<Home token={token} />} />
+                    <Route path="/flowers" element={<Flowers token={token} />} /> {/* เส้นทางสำหรับ All flower */}
+                    <Route path="/cart" element={<PrivateRoute element={<Cart token={token} />} />} />
+                    <Route path="/pay" element={<PrivateRoute element={<Pay token={token} />} />} />
+                    <Route path="/order" element={<PrivateRoute element={<Order token={token} />} />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login setToken={setToken} />} />
+                  </Routes>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 

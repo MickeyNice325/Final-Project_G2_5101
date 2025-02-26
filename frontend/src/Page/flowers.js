@@ -1,43 +1,70 @@
-import React from "react";
-import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
+import API from "../api"; // ✅ ใช้ API Utility
 
-function Home() {
+const Flowers = ({ token }) => {
+  const [flowers, setFlowers] = useState([]);
+
+  useEffect(() => {
+    const fetchFlowers = async () => {
+      try {
+        const res = await API.get("/flowers"); // ดึงข้อมูลสินค้า
+        setFlowers(res.data);
+      } catch (err) {
+        console.error("Error fetching flowers:", err);
+      }
+    };
+    fetchFlowers();
+  }, []); // ใช้ useEffect เพื่อดึงข้อมูลแค่ครั้งเดียว
+
+  const addToCart = async (flowerId) => {
+    if (!token) {
+      alert("Please log in first!");
+      return;
+    }
+    try {
+      await API.post(
+        "/cart",
+        { flowerId, quantity: 1 },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert("Added to cart!");
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+      alert("Failed to add to cart.");
+    }
+  };
+
   return (
-    <Container fluid>
-      <div className="card mt-3 shadow p-3 mb-5 bg-body rounded">
-        {/* Header */}
-        <Row className="align-items-center p-3 border-bottom justify-content-center">
-          <Col xs={10} md={6} className="text-center">
-            <InputGroup>
-              <Form.Control placeholder="ค้นหา..." />
-              <Button variant="primary">ค้นหา</Button>
-            </InputGroup>
-          </Col>
-        </Row>
-
-        {/* Grid สินค้า */}
-        <Row className="g-4 justify-content-start">
-          <Col xs={6} sm={6} md={4} lg={3}>
-            <div className="border rounded text-center p-3 shadow product-card">
+    <div className="d-flex justify-content-center mt-3" style={{ backgroundColor: "#ffffff", padding: "20px", borderRadius: "15px" }}>
+      <div className="container">
+        <h2 className="text-center mb-4">All Flowers</h2>
+        
+        {/* Product Section */}
+        <div className="row text-center mt-5 mb-5">
+          {flowers.length === 0 ? <p>Loading products...</p> : null}
+          {flowers.map((flower) => (
+            <div className="col-md-4 mb-4" key={flower.id}>
               <div className="image-container">
                 <img
-                  src="https://i.pinimg.com/736x/4a/58/75/4a5875d095eaa44484b144b7884a53e7.jpg"
-                  alt="Product"
-                  className="product-image"
+                  src={flower.imageUrl}
+                  className="img-fluid"
+                  alt={flower.name}
+                  style={{ height: "200px", width: "100%", objectFit: "contain", backgroundColor: "#f8f9fa" }}
                 />
               </div>
-              <div className="mt-2 text-start">
-                <p className="fw-bold text-primary">Sunflower</p>
-                <p className="text-muted">intels</p>
-                <p className="text-primary">price</p>
-              </div>
+              <h5 className="mt-2">{flower.name}</h5>
+              <p>{flower.price} Baht</p>
+              <button className="btn btn-primary" onClick={() => addToCart(flower.id)}>
+                Add to Cart
+              </button>
             </div>
-          </Col>
-        </Row>
+          ))}
+        </div>
       </div>
-    </Container>
+    </div>
   );
-}
+};
 
-export default Home;
+export default Flowers;

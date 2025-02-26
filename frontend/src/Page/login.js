@@ -1,50 +1,47 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // นำเข้า useNavigate
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // ใช้ useNavigate แทน useHistory
+import API from "../api"; 
 
-const Login = () => {
-  const navigate = useNavigate(); // ใช้สำหรับเปลี่ยนหน้า
+const Login = ({ setToken }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate(); // ใช้ navigate แทน history
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await API.login(username, password);
+      setMessage("Login successful");
+      localStorage.setItem("token", res.data.token); // เก็บ token ลงใน localStorage
+      setToken(res.data.token); // ส่ง token ไปยัง App
+      navigate("/home"); // เปลี่ยนจาก history.push เป็น navigate
+    } catch (err) {
+      setMessage(err.response.data.message);
+    }
+  };
 
   return (
+    <div className="container">
+      <h2>Login</h2>
+      <Form onSubmit={handleLogin}>
+        <Form.Group controlId="formBasicUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+        </Form.Group>
 
-     
-        <div className="card shadow mt-3 ms-3" style={{ width: "105rem", height: "54rem" }}>
-          <div className="card-body d-flex flex-column justify-content-center text-center">
-            <div className='container w-50'>
-                <h3 className="mb-4 fw-bold">LOGIN</h3>
-                <div className="d-flex justify-content-center mb-3">
-                    <input
-                        type="text"
-                        className="form-control shadow"
-                        placeholder="Username"
-                        
-                    />
-                </div>
-                <div className="d-flex justify-content-center mb-3">
-                    <input
-                        type="password"
-                        className="form-control shadow"
-                        placeholder="Password"
-                        
-                    />
-                </div>
-                <div className=" mt-4 d-flex justify-content-end">
-                    <button 
-                        className="btn btn-primary me-2 "
-                        style={{ backgroundColor: "#7D4BB1", borderColor: "#7D4BB1" }}
-                        onClick={() => navigate("/register")} // กดแล้วไปหน้า Register
-                    >
-                        Register
-                    </button>
-                    <button className="btn btn-light text-white" style={{ backgroundColor: "#D1B3FF", borderColor: "#D1B3FF" }}>
-                        LOGIN
-                    </button>
-                </div>
-            </div>
-          </div>
-        </div>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </Form.Group>
 
-
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
+      </Form>
+      {message && <p>{message}</p>}
+    </div>
   );
 };
 

@@ -17,7 +17,7 @@ const Home = ({ token }) => {
       }
     };
     fetchFlowers();
-  }, []);
+  }, []); // ใช้ useEffect เพื่อดึงข้อมูลแค่ครั้งเดียว
 
   const addToCart = async (flowerId) => {
     if (!token) {
@@ -87,7 +87,7 @@ const Home = ({ token }) => {
             { nickname: "นัท", fname: "ณัฐภัทร", lname: "กลิ่นจันทร์", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010012.jpg" },
             { nickname: "ดัง", fname: "naruepon", lname: "wangwiang", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010024.jpg" },
             { nickname: "มิกซ์", fname: "นัทพงษ์", lname: "วงศ์แสง", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" },
-            { nickname: "ริว", fname: "วัชรพงศ์", lname: "ส่งเสริม", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" }
+            { nickname: "ริว", fname: "วัชรพงษ์", lname: "ส่งเสริม", img: "https://www.lannapoly.ac.th/online/Stu_picture/66309010040.jpg" }
           ].map((member, index) => (
             <div className="col-md-4 mb-4" key={index}>
               <div className="d-flex flex-column align-items-center">
